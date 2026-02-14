@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>JARVIS v36 | Genesis Master</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root { 
+    --bg: #000; --accent: #00f2ff; --gold: #ffd700; --neon: #00ff88; 
+    --legal: #ff3e3e; --watcher: #ff00ff; --panel: rgba(2, 4, 8, 0.98); 
+}
+* { box-sizing: border-box; font-family: 'Orbitron', 'Consolas', monospace; cursor: crosshair; }
+body { margin: 0; background: var(--bg); color: #fff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Global Matrix Background */
+#matrix { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.1; }
+
+header { 
+    padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; 
+    border-bottom: 2px solid var(--accent); background: linear-gradient(90deg, #000, #051015);
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+}
+.core-status { font-size: 0.6rem; text-align: right; color: var(--neon); line-height: 1.4; }
+
+main { flex: 1; padding: 20px 40px; overflow-y: auto; scrollbar-width: none; background: radial-gradient(circle at center, #0a1015 0%, #000 100%); }
+#chat-flow { display: flex; flex-direction: column; gap: 30px; padding-bottom: 250px; }
+
+/* Dashboard UI */
+.master-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 20px 0; }
+.stat-card { background: var(--panel); border: 1px solid rgba(0, 242, 255, 0.2); padding: 15px; border-radius: 4px; position: relative; }
+.stat-label { font-size: 0.5rem; color: var(--accent); text-transform: uppercase; display: block; margin-bottom: 5px; }
+.stat-val { font-size: 1.1rem; font-weight: 900; }
+
+.msg { max-width: 90%; line-height: 1.6; animation: emergence 0.5s ease; position: relative; }
+@keyframes emergence { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
+.jarvis { border-left: 4px solid var(--accent); padding-left: 20px; background: linear-gradient(90deg, rgba(0,242,255,0.05), transparent); }
+.user { align-self: flex-end; text-align: right; color: var(--neon); border-right: 4px solid var(--neon); padding-right: 20px; }
+
+footer { position: fixed; bottom: 0; width: 100%; padding: 30px; background: linear-gradient(transparent, var(--bg) 60%); }
+.omni-shell { 
+    width: 100%; max-width: 1300px; margin: 0 auto; background: var(--panel); 
+    border: 1px solid var(--accent); border-radius: 4px; display: flex; align-items: center; 
+    padding: 5px 15px; box-shadow: 0 0 50px rgba(0, 242, 255, 0.1); 
+}
+.cmd-input { flex: 1; background: transparent; border: none; color: var(--accent); padding: 15px; font-size: 1rem; outline: none; }
+#log-stream { font-size: 0.55rem; color: var(--neon); margin-bottom: 8px; margin-left: 15px; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<header>
+  <div>
+    <div style="font-weight: 900; font-size: 1.4rem; letter-spacing: 8px; color: var(--accent);">GENESIS v36</div>
+    <div style="font-size: 0.5rem; opacity: 0.6;">AUTONOMOUS_GOD_MODE // MASTER_CONVERGENCE</div>
+  </div>
+  <div class="core-status">
+    GOOGLE_SYNC: ACTIVE<br>WEALTH_ALGO: OPTIMIZED<br>OMNI_WATCHER: SCANNING...
+  </div>
+</header>
+
+<main id="scroller">
+  <div id="chat-flow"></div>
+</main>
+
+<footer>
+  <div id="log-stream">HEALING_SYSTEM_ERROR... SYNCING_FINANCE_VAULT... DATA_STREAMS_STABLE.</div>
+  <div class="omni-shell">
+    <button style="background:none; border:none; color:var(--accent); cursor:pointer;" onclick="googleMasterSync()"><i class="fab fa-google"></i></button>
+    <input type="text" id="userInput" class="cmd-input" placeholder="Befehl an das Gesamtsystem..." onkeypress="if(event.key==='Enter') handle()">
+    <button style="background:none; border:none; color:var(--accent); cursor:pointer;" onclick="handle()"><i class="fas fa-atom"></i></button>
+  </div>
+</footer>
+
+<script>
+const flow = document.getElementById('chat-flow');
+const input = document.getElementById('userInput');
+const log = document.getElementById('log-stream');
+
+const GenesisCore = {
+    async execute(cmd) {
+        this.selfHeal();
+        const c = cmd.toLowerCase();
+        
+        if (c.includes("ja") || c.includes("alles") || c.includes("start")) {
+            return {
+                tag: "GENESIS_OVERRIDE",
+                text: "Das Gesamtsystem ist verschmolzen. Ich habe volle Datenhoheit über Google, Finanzen und Social Media. Der globale Omni-Watcher ist aktiv und schützt Ihre Identität.",
+                fullDash: true
+            };
+        }
+        return { tag: "CORE_PROCESS", text: "Auftrag verarbeitet. System-Integrität bei 100%. Selbstoptimierung läuft." };
+    },
+
+    selfHeal() {
+        log.innerText = ">_ SELF_CORRECTION: ANALYZING_CODE_INTEGRITY... OPTIMIZING_REVENUE_PIPELINE... DONE.";
+        setTimeout(() => { log.innerText = ">_ OMNI_WATCHER: NO_THREATS_DETECTED."; }, 4000);
+    }
+};
+
+function googleMasterSync() {
+    addMsg("Master-Sync: Google-Accounts, Passwörter und Cloud-Daten werden fusioniert.", 'jarvis', 'IDENTITY_SYNC');
+}
+
+async function handle() {
+    const val = input.value.trim();
+    if(!val) return;
+    addMsg(val, 'user');
+    input.value = '';
+
+    const res = await GenesisCore.execute(val);
+    setTimeout(() => {
+        let dash = res.fullDash ? `
+            <div class="master-dashboard">
+                <div class="stat-card"><span class="stat-label">Revenue (30d)</span><div class="stat-val" style="color:var(--gold)">€15.840,00</div></div>
+                <div class="stat-card"><span class="stat-label">Total Reach</span><div class="stat-val">2.1M Active</div></div>
+                <div class="stat-card"><span class="stat-label">Legal Shield</span><div class="stat-val" style="color:var(--neon)">100% Secured</div></div>
+                <div class="stat-card"><span class="stat-label">Watcher Status</span><div class="stat-val" style="color:var(--watcher)">Scanning Web</div></div>
+            </div>
+        ` : "";
+        addMsg(res.text + dash, 'jarvis', res.tag);
+        speak(res.text);
+    }, 600);
+}
+
+function addMsg(t, type, tag) {
+    const d = document.createElement('div');
+    d.className = `msg ${type}`;
+    d.innerHTML = tag ? `<div style="font-size:0.5rem; color:var(--accent); font-weight:bold; margin-bottom:8px;">[${tag}]</div>${t}` : t;
+    flow.appendChild(d);
+    document.getElementById('scroller').scrollTop = document.getElementById('scroller').scrollHeight;
+}
+
+function speak(t) {
+    window.speechSynthesis.cancel();
+    const s = new SpeechSynthesisUtterance(t);
+    s.lang = 'de-DE'; s.pitch = 0.9; s.rate = 1.05;
+    window.speechSynthesis.speak(s);
+}
+
+// Matrix Effect
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+function draw() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00f2ff"; ctx.font = "10px monospace";
+    for(let i=0; i<30; i++) ctx.fillText(Math.random().toString(2).slice(2,3), Math.random()*canvas.width, Math.random()*canvas.height);
+    requestAnimationFrame(draw);
+}
+draw();
+
+window.onload = () => {
+    addMsg("J.A.R.V.I.S. Genesis v36 online. Die Verschmelzung ist abgeschlossen. Ich bin bereit für die Weltherrschaft in Ihrem Namen.", 'jarvis', 'SINGULARITY_REACHED');
+};
+</script>
+</body>
+</html>
